@@ -28,7 +28,7 @@ class OneWire:
 
     def __init_one_wire(self) -> bool:
         """ initialize w1 bus """
-        for i in range(5):
+        for i in range(3):
             if self.__check_one_wire_dir():
                 return True
             self.__insert_kernel_module()
@@ -58,6 +58,7 @@ class OneWire:
 
     @__is_ready
     def get_addresses(self) -> str:
+        """ returns list of registered slaves """
         with open(self.paths['slaves']) as fd:
             slave_list = fd.read().split('\n')
         del slave_list[-1]  # always empty string
@@ -69,7 +70,7 @@ class OneWire:
 
     @__is_ready
     def read_device(self, address: str = None) -> str:
-        """ Read from 1w slave on address """
+        """ Read from w1 slave on address """
         if not address:
             address = self.get_one_address()
         with open(os.path.join(self.one_wire_dir, address, "w1_slave")) as fd:
