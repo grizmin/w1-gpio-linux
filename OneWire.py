@@ -1,6 +1,6 @@
 import os
 import subprocess
-from time import time
+from time import sleep
 from functools import wraps
 
 
@@ -32,7 +32,7 @@ class OneWire:
             if self.__check_one_wire_dir():
                 return True
             self.__insert_kernel_module()
-            time.sleep(self.setup_delay)
+            sleep(self.setup_delay)
 
     def __is_ready(original_func):
         """ in-class decorator, that checks if w1 is initialized properly """
